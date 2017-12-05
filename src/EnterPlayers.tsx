@@ -26,7 +26,7 @@ class EnterPlayers extends React.Component {
 
     this.state = {
       numberOfPlayers: 5,
-      playerNames: []
+      playerNames: ['Krisztina', 'Mathieu', 'Madeleine', 'Viktor', 'Player']
     };
   }
 
