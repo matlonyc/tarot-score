@@ -20,18 +20,38 @@ const buttonStyle = {
   margin: 12,
 };
 
-class EnterPlayers extends React.Component {
+class EnterPlayers extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      numberOfPlayers: 5,
-      playerNames: ['Krisztina', 'Mathieu', 'Madeleine', 'Viktor', 'Player']
+      numberOfPlayers: props.numberOfPlayers,
+      playerNames: Array(props.numberOfPlayers).fill(''),
+      onEnterPlayersReady: props.onReady
     };
   }
 
   componentWillReceiveProps(props: any) {
+    this.setState({
+      numberOfPlayers: props.numberOfPlayers,
+      playerNames: Array(props.numberOfPlayers).fill(''),
+      onEnterPlayersReady: props.onReady
+    });
+  }
 
+  onChange = (event: any, newValue: string) => {
+    const index = parseInt(event.target.name);
+    const updatedNames = this.state.playerNames.map(
+      (name: string, idx: number) => idx === (index - 1) ? newValue : name
+    );
+
+    this.setState({
+      playerNames: updatedNames
+    });
+  }
+
+  onReady = () => {
+    this.state.onEnterPlayersReady(this.state.playerNames);
   }
 
   render() {
@@ -46,6 +66,8 @@ class EnterPlayers extends React.Component {
                   hintText="Enter player name"
                   floatingLabelText="Player 1"
                   floatingLabelFixed={true}
+                  name="1"
+                  onChange={this.onChange.bind(this)}
                 /><br/>
               </ListItem>
               <ListItem>
@@ -53,6 +75,8 @@ class EnterPlayers extends React.Component {
                   hintText="Enter player name"
                   floatingLabelText="Player 2"
                   floatingLabelFixed={true}
+                  name="2"
+                  onChange={this.onChange.bind(this)}
                 /><br/>
               </ListItem>
               <ListItem>
@@ -60,6 +84,8 @@ class EnterPlayers extends React.Component {
                   hintText="Enter player name"
                   floatingLabelText="Player 3"
                   floatingLabelFixed={true}
+                  name="3"
+                  onChange={this.onChange.bind(this)}
                 /><br/>
               </ListItem>
               <ListItem>
@@ -67,6 +93,8 @@ class EnterPlayers extends React.Component {
                   hintText="Enter player name"
                   floatingLabelText="Player 4"
                   floatingLabelFixed={true}
+                  name="4"
+                  onChange={this.onChange.bind(this)}
                 /><br/>
               </ListItem>
               <ListItem>
@@ -74,6 +102,8 @@ class EnterPlayers extends React.Component {
                   hintText="Enter player name"
                   floatingLabelText="Player 5"
                   floatingLabelFixed={true}
+                  name="5"
+                  onChange={this.onChange.bind(this)}
                 /><br/>
               </ListItem>
               <ListItem>
@@ -81,6 +111,7 @@ class EnterPlayers extends React.Component {
                   label="Ready!"
                   primary={true}
                   style={buttonStyle}
+                  onClick={this.onReady.bind(this)}
                 />
               </ListItem>
             </List>
