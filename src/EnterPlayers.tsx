@@ -8,6 +8,9 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
+const HINT_TEXT = 'Entrez le nom du joueur';
+const TITLE = 'Entrez le nom de chaque joueur';
+const READY = 'C\'est parti';
 
 const style = {
   width: 500,
@@ -59,11 +62,14 @@ class EnterPlayers extends React.Component<any, any> {
       <div>
         <MuiThemeProvider muiTheme={lightMuiTheme}>
           <Paper style={style} zDepth={5} rounded={false}>
-            <AppBar title="Enter the player names" showMenuIconButton={false}/>
+            <AppBar
+              title={TITLE}
+              showMenuIconButton={false}
+            />
             <List>
               <ListItem>
                 <TextField
-                  hintText="Enter player name"
+                  hintText={HINT_TEXT}
                   floatingLabelText="Player 1"
                   floatingLabelFixed={true}
                   name="1"
@@ -72,7 +78,7 @@ class EnterPlayers extends React.Component<any, any> {
               </ListItem>
               <ListItem>
                 <TextField
-                  hintText="Enter player name"
+                  hintText={HINT_TEXT}
                   floatingLabelText="Player 2"
                   floatingLabelFixed={true}
                   name="2"
@@ -81,7 +87,7 @@ class EnterPlayers extends React.Component<any, any> {
               </ListItem>
               <ListItem>
                 <TextField
-                  hintText="Enter player name"
+                  hintText={HINT_TEXT}
                   floatingLabelText="Player 3"
                   floatingLabelFixed={true}
                   name="3"
@@ -90,7 +96,7 @@ class EnterPlayers extends React.Component<any, any> {
               </ListItem>
               <ListItem>
                 <TextField
-                  hintText="Enter player name"
+                  hintText={HINT_TEXT}
                   floatingLabelText="Player 4"
                   floatingLabelFixed={true}
                   name="4"
@@ -99,7 +105,7 @@ class EnterPlayers extends React.Component<any, any> {
               </ListItem>
               <ListItem>
                 <TextField
-                  hintText="Enter player name"
+                  hintText={HINT_TEXT}
                   floatingLabelText="Player 5"
                   floatingLabelFixed={true}
                   name="5"
@@ -108,7 +114,7 @@ class EnterPlayers extends React.Component<any, any> {
               </ListItem>
               <ListItem>
                 <RaisedButton
-                  label="Ready!"
+                  label={READY}
                   primary={true}
                   style={buttonStyle}
                   onClick={this.onReady.bind(this)}

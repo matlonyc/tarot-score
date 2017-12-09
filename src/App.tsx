@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import EnterPlayers from './EnterPlayers';
+import Game from './Game';
 
 const logo = require('./logo.svg');
 
@@ -29,9 +30,10 @@ class App extends React.Component<any, any> {
         />
       );
     } else {
-      debugger;
       return (
-        <div>Hello! {this.state.playerNames[0]}</div>
+        <Game
+          playerNames={this.state.playerNames}
+        />
       );
     }
   }
@@ -43,7 +45,7 @@ class App extends React.Component<any, any> {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Jouons au tarot !</h2>
         </div>
-        {this.buildPlayerList()};
+        {this.buildPlayerList()}
       </div>
     );
   }
