@@ -6,9 +6,14 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
+import FlatButton from 'material-ui/FlatButton';
 
-const lightMuiTheme = getMuiTheme(darkBaseTheme);
+const theme = getMuiTheme(darkBaseTheme);
 const style = {
   width: 800,
   margin: 20,
@@ -69,7 +74,9 @@ class Round extends React.Component<any, any> {
       wonLost: '',
       selectedPoints: 0,
       buttonLabel: ' ',
-      buttonDisabled: true
+      buttonDisabled: true,
+      stepIndex: 0,
+      finished: false
     };
   }
 
@@ -92,6 +99,8 @@ class Round extends React.Component<any, any> {
       selectedPoints: 0,
       buttonLabel: ' ',
       buttonDisabled: true,
+      stepIndex: 0,
+      finished: false,
     });
   }
 
@@ -232,31 +241,102 @@ class Round extends React.Component<any, any> {
               onClick={this.onDone.bind(this)}/>);
   }
 
+  getStepContent = (stepIndex: number) => {
+    switch (stepIndex) {
+      case 0:
+        return this.renderSelectLeader();
+      case 1:
+        return this.renderSelectPartner();
+      case 2:
+        return this.renderSelectContract()
+      case 3:
+        return this.renderWonLost()
+      case 4:
+        return this.renderPoints()
+      default:
+        return 'You\'re a long way from home sonny jim!';
+    }
+  }
+
+  handleNext = () => {
+    const {stepIndex} = this.state;
+
+    if (stepIndex === 4) {
+      this.onDone();
+      this.resetState();
+    } else {
+      this.setState({
+        stepIndex: stepIndex + 1,
+        finished: stepIndex >= 5,
+    });
+  }
+  };
+
+  handlePrev = () => {
+    const {stepIndex} = this.state;
+    if (stepIndex > 0) {
+      this.setState({stepIndex: stepIndex - 1});
+    }
+  };
+
   render() {
+    const contentStyle = {margin: '0 16px'};
+    const stepIndex = this.state.stepIndex;
+
     return (
       <div>
-        <MuiThemeProvider muiTheme={lightMuiTheme}>
+        <MuiThemeProvider muiTheme={theme}>
           <Paper style={style} zDepth={5} rounded={false}>
-            <GridList cols={6} cellHeight={100}>
-              <GridTile title="Qui prend ?">
-                {this.renderSelectLeader()}
-              </GridTile>
-              <GridTile title="Avec qui ?">
-                {this.renderSelectPartner()}
-              </GridTile>
-              <GridTile title="Quel contrat ?">
-                {this.renderSelectContract()}
-              </GridTile>
-              <GridTile title="Quel resultat ?">
-                {this.renderWonLost()}
-              </GridTile>
-              <GridTile title="Points ?">
-                {this.renderPoints()}
-              </GridTile>
-              <GridTile>
-                {this.renderDone()}
-              </GridTile>
-            </GridList>
+            <Stepper activeStep={stepIndex}>
+              <Step>
+                <StepLabel>Qui a pris la main ?</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Avec qui ?</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Quel contrat ?</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Resultat ?</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Par combien de points ?</StepLabel>
+              </Step>
+            </Stepper>
+            <div style={contentStyle}>
+            {this.state.finished ? (
+            <p>
+              <a
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  this.setState({stepIndex: 0, finished: false});
+                }}
+              >
+                Click here
+              </a> to reset the example.
+            </p>
+          ) : (
+            <div>
+              <p>{this.getStepContent(stepIndex)}</p>
+              <div style={{marginTop: 12}}>
+                <FlatButton
+                  label="Retour"
+                  disabled={stepIndex === 0}
+                  onClick={this.handlePrev}
+                  style={{marginRight: 12}}
+                />
+                <RaisedButton
+                  label={stepIndex === 4 ? 'Calculer' : 'Suivant'}
+                  primary={true}
+                  onClick={this.handleNext}
+                />
+              </div>
+            </div>
+          )}
+
+            </div>
           </Paper>
         </MuiThemeProvider>
       </div>
