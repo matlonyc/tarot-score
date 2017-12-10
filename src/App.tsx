@@ -11,7 +11,7 @@ class App extends React.Component<any, any> {
 
     this.state = {
       numberOfPlayers: 5,
-      playerNames: []//['Mathieu', 'Krisztina', 'Madeleine', 'Viktor', 'Lucille'],
+      playerNames: ['Mathieu', 'Krisztina', 'Madeleine', 'Viktor', 'Lucille'],
     };
   }
 

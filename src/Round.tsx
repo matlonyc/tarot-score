@@ -1,17 +1,20 @@
 import * as React from 'react';
 import Paper from 'material-ui/Paper';
-import { MuiThemeProvider, lightBaseTheme } from 'material-ui/styles';
+import { MuiThemeProvider } from 'material-ui/styles';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import {GridList, GridTile} from 'material-ui/GridList';
 
-const lightMuiTheme = getMuiTheme(lightBaseTheme);
+const lightMuiTheme = getMuiTheme(darkBaseTheme);
 const style = {
-  width: 500,
+  width: 800,
   margin: 20,
   textAlign: 'center',
   display: 'inline-block',
+  backgroundColor: '#00acc1',
 };
 const buttonStyle = {
   margin: 12,
@@ -65,7 +68,7 @@ class Round extends React.Component<any, any> {
       contracts: CONTRATS.map( (contrat) => contrat.name),
       wonLost: '',
       selectedPoints: 0,
-      buttonLabel: '...',
+      buttonLabel: ' ',
       buttonDisabled: true
     };
   }
@@ -87,7 +90,7 @@ class Round extends React.Component<any, any> {
       contracts: CONTRATS.map( (contrat) => contrat.name),
       wonLost: '',
       selectedPoints: 0,
-      buttonLabel: '...',
+      buttonLabel: ' ',
       buttonDisabled: true,
     });
   }
@@ -225,6 +228,7 @@ class Round extends React.Component<any, any> {
               primary={true}
               style={buttonStyle}
               disabled={this.state.buttonDisabled}
+              disabledBackgroundColor="#00acc1"
               onClick={this.onDone.bind(this)}/>);
   }
 
@@ -233,12 +237,26 @@ class Round extends React.Component<any, any> {
       <div>
         <MuiThemeProvider muiTheme={lightMuiTheme}>
           <Paper style={style} zDepth={5} rounded={false}>
-            {this.renderSelectLeader()}
-            {this.renderSelectPartner()}
-            {this.renderSelectContract()}
-            {this.renderWonLost()}
-            {this.renderPoints()}
-            {this.renderDone()}
+            <GridList cols={6} cellHeight={100}>
+              <GridTile title="Qui prend ?">
+                {this.renderSelectLeader()}
+              </GridTile>
+              <GridTile title="Avec qui ?">
+                {this.renderSelectPartner()}
+              </GridTile>
+              <GridTile title="Quel contrat ?">
+                {this.renderSelectContract()}
+              </GridTile>
+              <GridTile title="Quel resultat ?">
+                {this.renderWonLost()}
+              </GridTile>
+              <GridTile title="Points ?">
+                {this.renderPoints()}
+              </GridTile>
+              <GridTile>
+                {this.renderDone()}
+              </GridTile>
+            </GridList>
           </Paper>
         </MuiThemeProvider>
       </div>

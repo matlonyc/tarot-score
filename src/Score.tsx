@@ -19,12 +19,18 @@ class Score extends React.Component<any, any> {
     });
   }
 
+  toNeatNames = (camelCase: string) => {
+    const result = camelCase.replace( /([A-Z])/g, " $1" );
+
+    return result.charAt(0).toUpperCase() + result.slice(1);
+  }
+
   getColumns(scores: any) {
     const playerNames = Object.keys(scores[0]);
 
     return playerNames.map((playerName: string) => {
           return {
-            Header: playerName,
+            Header: this.toNeatNames(playerName),
             accessor: playerName
           };
         }
