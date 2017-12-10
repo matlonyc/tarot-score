@@ -11,7 +11,7 @@ class App extends React.Component<any, any> {
 
     this.state = {
       numberOfPlayers: 5,
-      playerNames: [],
+      playerNames: []//['Mathieu', 'Krisztina', 'Madeleine', 'Viktor', 'Lucille'],
     };
   }
 
@@ -22,7 +22,7 @@ class App extends React.Component<any, any> {
   }
 
   buildPlayerList = () => {
-    if (this.state.playerNames.length == 0) {
+    if (this.state.playerNames.length === 0) {
       return (
         <EnterPlayers
           numberOfPlayers={this.state.numberOfPlayers}
